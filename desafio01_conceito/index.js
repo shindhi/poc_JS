@@ -3,6 +3,28 @@ const server = express();
 
 server.use(express.json());
 
+// middleware
+function checkUserExists(req, res, next) {
+  const { id } = req.params;
+
+  if (arr[id] == null) {
+    return res.json({ error: 'User does not exists!' });
+  }
+
+  req.item = arr[id];
+
+  return next();
+}
+
+let count = 0;
+server.use((req, res, next) => {
+  
+  console.log(`${count += 1} requisicao feitas`);
+
+  return next();
+})
+
+
 const arr = [];
 
 server.post('/projects', (req, res) => {
@@ -17,30 +39,28 @@ server.get('/projects', (req, res) => {
   return res.json(arr);
 });
 
-server.put('/projects/:id', (req, res) => {
-  const { id } = req.params;
+server.put('/projects/:id', checkUserExists, (req, res) => {
   const { title } = req.body;
 
-  arr[id].title = title;
+  req.item.title = title;
 
   return res.json(arr[id]);
 });
 
-server.delete('/projects/:id', (req, res) => {
+server.delete('/projects/:id', checkUserExists, (req, res) => {
   const { id } = req.params;
-
+  
   arr.splice(id, 1);
 
   return res.json();
 });
 
-server.post('/projects/:id/tasks', (req, res) => {
-  const { id } = req.params;
+server.post('/projects/:id/tasks', checkUserExists, (req, res) => {
   const { title } = req.body;
 
-  arr[id].task.push(title);
+  req.item.task.push(title);
 
-  return res.json(arr[id]);
+  return res.json(req.item);
 })
 
 
