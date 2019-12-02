@@ -1,10 +1,10 @@
 import React from 'react';
 
 function Header() {
-  return (
+  return(
     <header>
       <nav>
-        <img src="https://i.imgur.com/KDIDiSE.png" />
+        <img src="https://i.imgur.com/KDIDiSE.png" alt="Facebook"/>
         <div>
           <span>Meu perfil</span>
           <i className="material-icons">account_circle</i>
