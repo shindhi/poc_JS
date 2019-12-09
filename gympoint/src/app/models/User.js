@@ -1,13 +1,13 @@
 import Sequelize, { Model } from 'sequelize';
-
 import bcrypt from 'bcryptjs';
 
-class Admin extends Model {
+class User extends Model {
   static init(sequelize) {
     super.init(
       {
         name: Sequelize.STRING,
         email: Sequelize.STRING,
+        password: Sequelize.VIRTUAL,
         password_hash: Sequelize.STRING,
       },
       {
@@ -23,4 +23,4 @@ class Admin extends Model {
   }
 }
 
-export default Admin;
+export default User;
